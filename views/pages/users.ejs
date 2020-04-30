@@ -1,0 +1,138 @@
+<%- include("../partials/header") %> <%- include("../components/navbar") %> <%-
+include("../components/search") %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <ul class="list-none list-group list-group-flush">
+        <% for (let user of users) { %> <% if (user.status === 1) { %>
+        <li
+          class="d-flex flex-row flex-wrap list-group-item justify-content-between"
+        >
+          <div class="d-flex flex-row">
+            <div
+              class="icon-box d-flex justify-content-center align-items-center"
+            >
+              <%= user.full_name.substring(0,1) %>
+            </div>
+            <div
+              class="space-left d-flex justify-content-center align-items-center"
+            >
+              <%= user.full_name %>
+            </div>
+          </div>
+          <div
+            class="d-none d-sm-flex justify-content-center align-items-center text-success"
+          >
+            <i>friends</i>
+          </div>
+          <form
+            method="POST"
+            action="/delete"
+            class="d-flex justify-content-center align-items-center"
+          >
+            <input type="hidden" name="id" value="<%- user.id%>" />
+            <button class="btn btn-lg btn-sm btn-outline-danger">
+              Remove Friend
+            </button>
+          </form>
+        </li>
+        <% } else if (user.status === 0){%>
+        <li
+          class="d-flex flex-row flex-wrap list-group-item justify-content-between"
+        >
+          <div class="d-flex flex-row">
+            <div
+              class="icon-box d-flex justify-content-center align-items-center"
+            >
+              <%= user.full_name.substring(0,1) %>
+            </div>
+            <div
+              class="space-left d-flex justify-content-center align-items-center"
+            >
+              <%= user.full_name %>
+            </div>
+          </div>
+          <div
+            class="d-none d-sm-flex justify-content-center align-items-center text-warning"
+          >
+            <i>pending request</i>
+          </div>
+          <form
+            method="POST"
+            action="/cancel"
+            class="d-flex justify-content-center align-items-center"
+          >
+            <input type="hidden" name="id" value="<%- user.id%>" />
+            <button class="btn btn-sm btn-outline-warning">
+              Cancel request
+            </button>
+          </form>
+        </li>
+        <% } else if (user.status === 2){%>
+        <li
+          class="d-flex flex-row flex-wrap list-group-item justify-content-between"
+        >
+          <div class="d-flex flex-row">
+            <div
+              class="icon-box d-flex justify-content-center align-items-center"
+            >
+              <%= user.full_name.substring(0,1) %>
+            </div>
+            <div
+              class="space-left d-flex justify-content-center align-items-center"
+            >
+              <%= user.full_name %>
+            </div>
+          </div>
+          <div
+            class="d-none d-sm-flex justify-content-center align-items-center"
+          >
+            <i>pending request</i>
+          </div>
+          <form
+            method="POST"
+            action="/cancel"
+            class="d-flex justify-content-center align-items-center"
+          >
+            <input type="hidden" name="id" value="<%- user.id%>" />
+            <button class="btn btn-sm btn-sm btn-outline-warning">
+              Cancel request
+            </button>
+          </form>
+        </li>
+        <% } else { %>
+        <li
+          class="d-flex flex-row flex-wrap list-group-item justify-content-between"
+        >
+          <div class="d-flex flex-row">
+            <div
+              class="icon-box d-flex justify-content-center align-items-center"
+            >
+              <%= user.full_name.substring(0,1) %>
+            </div>
+            <div
+              class="space-left d-flex justify-content-center align-items-center"
+            >
+              <%= user.full_name %>
+            </div>
+          </div>
+          <div></div>
+          <form
+            method="POST"
+            action="/add"
+            class="d-flex justify-content-center align-items-center"
+          >
+            <input type="hidden" name="id" value="<%- user.id%>" />
+            <button class="btn btn-sm btn-outline-info">
+              Add friend
+            </button>
+          </form>
+        </li>
+        <% }%> <% } %>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<%- include("../partials/footer") %>

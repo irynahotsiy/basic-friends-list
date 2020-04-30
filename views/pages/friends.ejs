@@ -1,0 +1,139 @@
+<%- include("../partials/header") %> <%- include("../components/navbar") %>
+
+<div class="container text-left">
+  <div class="row">
+    <div class="col-12" id="friends">
+      <h3>Pending request</h3>
+      <h5>Incomming</h5>
+      <% if (incomingRequests.length < 1 ) { %>
+      <p class="text-muted">
+        <small>You don't have any incomming requests yet.</small>
+      </p>
+      <% } else { %>
+      <ul class="list-none list-group list-group-flush">
+        <% for (let user of incomingRequests) { %>
+        <li
+          class="d-flex flex-row flex-wrap list-group-item justify-content-between"
+        >
+          <div class="d-flex flex-row">
+            <div
+              class="icon-box d-flex justify-content-center align-items-center"
+            >
+              <%= user.full_name.substring(0,1) %>
+            </div>
+            <div
+              class="space-left d-flex justify-content-center align-items-center"
+            >
+              <%= user.full_name %>
+            </div>
+          </div>
+          <div class="d-none d-sm-flex"></div>
+          <div
+            class="d-flex flex-row justify-content-center align-items-center"
+          >
+            <form method="POST" action="/accept" class="btn-padd">
+              <input type="hidden" name="id" value="<%- user.id%>" />
+              <button class="btn btn-lg btn-sm btn-outline-success">
+                Accept
+              </button>
+            </form>
+            <form method="POST" action="/ignore" class="btn-padd">
+              <input type="hidden" name="id" value="<%- user.id%>" />
+              <button class="btn btn-lg btn-sm btn-outline-danger">
+                Ignore
+              </button>
+            </form>
+          </div>
+        </li>
+        <%}%>
+      </ul>
+      <%}%>
+      <h5>Outgoing</h5>
+      <% if (requested.length < 1 ) { %>
+      <p class="text-muted">
+        <small>You don't have any outgoing requests yet.</small>
+      </p>
+      <% } else { %>
+
+      <ul class="list-none list-group list-group-flush">
+        <% for (let user of requested) { %>
+        <li
+          class="d-flex flex-row flex-wrap list-group-item justify-content-between"
+        >
+          <div class="d-flex flex-row">
+            <div
+              class="icon-box d-flex justify-content-center align-items-center"
+            >
+              <%= user.full_name.substring(0,1) %>
+            </div>
+            <div
+              class="space-left d-flex justify-content-center align-items-center"
+            >
+              <%= user.full_name %>
+            </div>
+          </div>
+          <div
+            class="d-none d-sm-flex flex-row justify-content-center align-items-center text-warning"
+          >
+            <i> pending request </i>
+          </div>
+
+          <form
+            method="POST"
+            action="/cancel"
+            class="d-flex flex-row justify-content-center align-items-center"
+          >
+            <input type="hidden" name="id" value="<%- user.id%>" />
+            <button class="btn btn-lg btn-sm btn-outline-warning">
+              Cancel request
+            </button>
+          </form>
+        </li>
+        <%}%>
+      </ul>
+      <%}%>
+      <h3>Friends</h3>
+      <% if (friends.length < 1 ) { %>
+      <p class="text-muted"><small>You don't have any friends yet.</small></p>
+      <% } else { %>
+      <ul class="list-none list-group list-group-flush">
+        <% for (let user of friends) { %>
+        <li
+          class="d-flex flex-row flex-wrap list-group-item justify-content-between"
+        >
+          <div class="d-flex flex-row">
+            <div
+              class="icon-box d-flex justify-content-center align-items-center"
+            >
+              <%= user.full_name.substring(0,1) %>
+            </div>
+            <div
+              class="space-left d-flex justify-content-center align-items-center"
+            >
+              <%= user.full_name %>
+            </div>
+          </div>
+          <div
+            class="d-none d-sm-flex justify-content-center align-items-center text-success"
+          >
+            <i> friends </i>
+          </div>
+          <form
+            method="POST"
+            action="/delete"
+            class="d-flex flex-row justify-content-center align-items-center"
+          >
+            <input type="hidden" name="id" value="<%- user.id%>" />
+            <button class="btn btn-lg btn-sm btn-outline-danger">
+              Remove Friend
+            </button>
+          </form>
+        </li>
+        <%}%>
+      </ul>
+      <%}%>
+    </div>
+  </div>
+</div>
+
+<%- include("../partials/footer") %>
