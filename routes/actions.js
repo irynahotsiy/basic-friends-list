@@ -76,14 +76,31 @@ router.post("/accept", async (req, res) => {
   const current_user = req.session.user_id;
   const user_to_add = req.body.id;
   // add direct and reverse connections to database
-  await query(
-    `insert into relations (user_from, user_to, status ) values (?, ?, 1)`,
+  const reverseRequest = await query(
+    `select * from relations 
+        where user_from = ? and user_to = ? and status = 2
+      `,
     [current_user, user_to_add]
   );
-  await query(
-    `update relations set status = 1 where user_from = ? and user_to = ?`,
-    [user_to_add, current_user]
-  );
+  if (reverseRequest.length === 0) {
+    await query(
+      `insert into relations (user_from, user_to, status ) values (?, ?, 1)`,
+      [current_user, user_to_add]
+    );
+    await query(
+      `update relations set status = 1 where user_from = ? and user_to = ?`,
+      [user_to_add, current_user]
+    );
+  } else {
+    await query(
+      `update relations set status = 1 where user_from = ? and user_to = ?`,
+      [user_to_add, current_user]
+    );
+    await query(
+      `update relations set status = 1 where user_from = ? and user_to = ?`,
+      [current_user, user_to_add]
+    );
+  }
   res.redirect("back");
 });
 
