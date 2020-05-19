@@ -85,19 +85,14 @@ include("../components/search") %>
               <%= user.full_name %>
             </div>
           </div>
-          <div
-            class="d-none d-sm-flex justify-content-center align-items-center"
-          >
-            <i>pending request</i>
-          </div>
           <form
             method="POST"
             action="/cancel"
             class="d-flex justify-content-center align-items-center"
           >
             <input type="hidden" name="id" value="<%- user.id%>" />
-            <button class="btn btn-sm btn-sm btn-outline-warning">
-              Cancel request
+            <button class="btn btn-sm btn-sm btn-outline-info" disabled>
+              Add friend
             </button>
           </form>
         </li>
